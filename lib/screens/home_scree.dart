@@ -40,13 +40,18 @@ class _HomeScreenState extends State<HomeScreen>
           children: [
             Image.asset("assets/wheel.png"),
             RotationTransition(
-              turns: Tween(begin: _animBegin, end: _animEnd).animate(_animation),
+              turns:
+                  Tween(begin: _animBegin, end: _animEnd).animate(_animation),
               child: GestureDetector(
                 onTap: () {
                   _animationController.forward();
                   if (_animationController.isCompleted) {
-                    _animationController.repeat();
-                    _animationController.forward();
+                    setState(() {
+                      _animBegin = _animEnd;
+                      _animEnd = _controller.getRandomPosition();
+                      _animationController.repeat();
+                      _animationController.forward();
+                    });
                   }
                 },
                 child: Image.asset("assets/arrow.png"),
