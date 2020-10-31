@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 
 import '../controllers/action_controller.dart';
+
+import '../models/action_model.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -29,6 +32,44 @@ class _HomeScreenState extends State<HomeScreen>
     _animBegin = 0.0;
     _animEnd = _controller.getRandomPosition();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    _animationController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        ActionModel _action = _controller.getAction();
+        showDialog(
+            context: context,
+            builder: (context) {
+              return SimpleDialog(
+                title: Center(
+                  child: Text(
+                    "Action!",
+                    style: GoogleFonts.bangers(fontSize: 40.0),
+                  ),
+                ),
+                children: [
+                  Text(
+                    _action.description,
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.indieFlower(fontSize: 30.0),
+                  ),
+                ],
+                contentPadding: EdgeInsets.all(20.0),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0)),
+              );
+            });
+      }
+    });
+    super.didChangeDependencies();
   }
 
   @override
