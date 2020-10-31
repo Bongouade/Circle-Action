@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'screen/home_scree.dart';
+import 'controllers/action_controller.dart';
+
+import 'screens/home_scree.dart';
 
 void main() => runApp(CircleAction());
 

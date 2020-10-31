@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../controllers/action_controller.dart';
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -9,6 +11,9 @@ class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   AnimationController _animationController;
   Animation _animation;
+  double _animBegin;
+  double _animEnd;
+  final ActionController _controller = ActionController();
 
   @override
   void initState() {
@@ -20,6 +25,8 @@ class _HomeScreenState extends State<HomeScreen>
       parent: _animationController,
       curve: Curves.bounceInOut,
     );
+    _animBegin = 0.0;
+    _animEnd = _controller.getRandomPosition();
     super.initState();
   }
 
@@ -33,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen>
           children: [
             Image.asset("assets/wheel.png"),
             RotationTransition(
-              turns: Tween(begin: 0.0, end: 0.5).animate(_animation),
+              turns: Tween(begin: _animBegin, end: _animEnd).animate(_animation),
               child: GestureDetector(
                 onTap: () {
                   _animationController.forward();
