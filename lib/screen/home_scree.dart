@@ -18,23 +18,34 @@ class _HomeScreenState extends State<HomeScreen>
     );
     _animation = CurvedAnimation(
       parent: _animationController,
-      curve: Curves.decelerate,
+      curve: Curves.bounceInOut,
     );
-    _animationController.forward();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FadeTransition(
-        opacity: _animation,
-        child: Container(
-          alignment: Alignment.center,
-          child: Text(
-            "Action !",
-            style: TextStyle(fontSize: 45, color: Colors.black),
-          ),
+      body: Container(
+        alignment: Alignment.center,
+        margin: EdgeInsets.symmetric(horizontal: 10),
+        child: Stack(
+          children: [
+            Image.asset("assets/wheel.png"),
+            RotationTransition(
+              turns: _animation,
+              child: GestureDetector(
+                onTap: () {
+                  _animationController.forward();
+                  if (_animationController.isCompleted) {
+                    _animationController.repeat();
+                    _animationController.forward();
+                  }
+                },
+                child: Image.asset("assets/arrow.png"),
+              ),
+            ),
+          ],
         ),
       ),
     );
