@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen>
                   _animationController.forward();
                   if (_animationController.isCompleted) {
                     setState(() {
-                      _animBegin = _animEnd;
+                      _animBegin = _animEnd - _animEnd.truncate();
                       _animEnd = _controller.getRandomPosition();
                       _animationController.repeat();
                       _animationController.forward();
